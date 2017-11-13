@@ -89,3 +89,17 @@ body {
     border-bottom: 0;
   }
 }
+
+
+.form-group {
+  input{
+    &.ng-invalid.ng-touched{
+      border: 1px solid #ff0000;
+    }
+  }
+}
+p{
+  &.error{
+    color: red;
+  }
+}

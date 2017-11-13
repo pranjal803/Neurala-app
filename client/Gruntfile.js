@@ -167,6 +167,9 @@ module.exports = function (grunt) {
           ]
         }]
       },
+      options: {
+        force: true
+      },
       server: '.tmp'
     },
 

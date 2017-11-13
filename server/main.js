@@ -1,26 +1,42 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+const express = require('express')
+const path = require('path')
+const favicon = require('serve-favicon')
+const logger = require('morgan')
+const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
+const passport = require('passport')
 
 var index = require('./routes/index');
-var users = require('./routes/users');
 
 var app = express();
 
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'dist')));
 
-app.use('/', index);
-app.use('/users', users);
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+
+var models = require("./models");
+
+require('./config/passport.js')(passport, models.users);
+
+models.sequelize.sync().then(function() {
+  console.log('Nice! Database looks fine');
+}).catch(function(err) {
+  console.log(err, "Something went wrong with the Database Update!")
+});
+
+
+app.use('/', index)
+
+
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

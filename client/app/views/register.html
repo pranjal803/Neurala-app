@@ -1,0 +1,30 @@
+<form name="registerform" ng-submit="doRegister()">
+  <div class="title-section">
+    <h1><span>Register Here</span></h1>
+  </div>
+  
+  <div class="row">
+    <div class="form-group col-sm-6">
+      <label for="exampleInputEmail1">Email address</label>
+      <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" ng-model="data.email" ng-pattern="/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/" ng-required="true"/>
+      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-sm-6">
+      <label for="exampleInputPassword1">Password</label>
+      <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-model="data.password" ng-minlength="6" maxlength="25" ng-required="true"/>
+    </div>
+  </div>  
+  <div class="row">
+    <div class="form-group col-sm-6">
+      <label for="exampleInputPassword2">Confirm Password</label>
+      <input type="password" name="confirmPassword" class="form-control" id="exampleInputPassword2" placeholder="Confirm Password" ng-model="data.Confirm" ng-minlength="6" maxlength="25" ng-required="true"/>
+    </div>
+  </div>  
+  <div class="row">
+    <div class="form-group col-sm-6">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+</form>
