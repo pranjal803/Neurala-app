@@ -8,7 +8,7 @@
  * Controller of the clientApp
  */
 angular.module('clientApp')
-  .controller('RegisterCtrl', ['$scope', 'utils', '$location', function ($scope, utils, $location) {
+  .controller('RegisterCtrl', ['$scope', 'utils', '$location', 'Auth', function ($scope, utils, $location, Auth) {
     
     $scope.controls = {"registerError": false, "message": ""};
 
@@ -34,7 +34,8 @@ angular.module('clientApp')
       utils.handlePromise(RegisterPromise, function(response) {
         console.log(response);
         if (response.status == 'SIGNUP_SUCCESS') {          
-          
+          Auth.setLogin(true);      
+          $location.path("/");
         } else if(response.status == 'SIGNUP_INVALID') {
           $scope.controls.registerError = true;
           $scope.controls.message = "User exists";

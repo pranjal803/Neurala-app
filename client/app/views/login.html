@@ -1,8 +1,7 @@
 <form name="loginform" ng-submit="doLogin()">
   <div class="title-section">
     <h1><span>Login Here</span></h1>
-  </div>
-  
+  </div>  
   <div class="row">
     <div class="form-group col-sm-6">
       <label for="exampleInputEmail1">Email address</label>
@@ -21,4 +20,5 @@
       <button type="submit" class="btn btn-primary">Submit</button>
     </div>
   </div>
+  <p ng-if="controls.loginError" ng-bind-html="controls.message"></p>
 </form>

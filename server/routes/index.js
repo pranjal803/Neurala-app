@@ -1,7 +1,8 @@
-var express = require('express');
-var router = express.Router();
-var passport = require('passport');
-
+const express = require('express');
+const router = express.Router();
+const passport = require('passport');
+const path = require('path');
+const Products = require('../controllers/products')
 
 router.post('/register.do', function(req, res, next) {  
   passport.authenticate('local-signup', function(err, user) {
@@ -27,17 +28,58 @@ router.post('/login.do', function(req, res, next) {
     } else {
       req.logIn(user, function(err) {
         if (err) { res.json({ status: "ERROR" }) }
-        res.json({ status: "LOGIN_SUCCESS" });
+        res.json({ status: "LOGIN_SUCCESS" })
       });
     }
 
   })(req, res, next);
 });
 
-router.post('/logout.do', function(req, res) {
+router.post('/logout.do', function(req, res) {  
   req.session.destroy(function(err) {
-    res.json({ status: 'LOGOUT_SUCCESS' });
+    if(err){
+      res.json({ status: "ERROR" })
+    }else{
+      res.json({ status: 'LOGOUT_SUCCESS' })
+    }
   });
 });
+
+router.post('/profile.do', function(req, res) {  
+  console.log(req.session);
+
+  res.json({ status: 'OK' });
+  
+});
+
+router.post('/products.do', function(req, res) {  
+  Products.getTopProducts(function(err, productList){
+    console.log(productList);
+    res.json({ status: 'OK' });
+  })
+  
+});
+
+router.post('/likeProduct.do', function(req, res) {  
+  console.log(req.session);
+
+  res.json({ status: 'OK' });
+  
+});
+
+router.post('/unlikeProduct.do', function(req, res) {  
+  console.log(req.session);
+
+  res.json({ status: 'OK' });
+  
+});
+
+
+
+
+router.get('*', function(req, res) {
+  res.sendFile('index.html', { root: path.join(__dirname, '../dist') });      
+});
+
 
 module.exports = router;

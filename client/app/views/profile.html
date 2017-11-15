@@ -1,0 +1,35 @@
+<form name="registerform" ng-submit="updateProfile()">
+  <div class="title-section">
+    <h1><span>Profile</span></h1>
+  </div>
+  
+  <div class="row">
+    <div class="form-group col-sm-6">
+      <label for="exampleInputEmail1">Email address</label>
+      <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" ng-model="data.email" ng-pattern="/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/" ng-required="true"/>      
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-sm-6">
+      <label for="exampleInputPassword1">Old Password</label>
+      <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-model="data.password" ng-minlength="6" maxlength="25" ng-required="true"/>
+    </div>
+  </div>  
+  <div class="row">
+    <div class="form-group col-sm-6">
+      <label for="InputPassword1">New Password</label>
+      <input type="password" name="newPassword" class="form-control" id="InputPassword1" placeholder="Password" ng-model="data.password" ng-minlength="6" maxlength="25" ng-required="true"/>
+    </div>
+  </div>  
+  <div class="row">
+    <div class="form-group col-sm-6">
+      <label for="InputPassword2">Confirm New Password</label>
+      <input type="password" name="confirmNewPassword" class="form-control" id="InputPassword2" placeholder="Confirm Password" ng-model="data.Confirm" ng-minlength="6" maxlength="25" ng-required="true"/>
+    </div>
+  </div>  
+  <div class="row">
+    <div class="form-group col-sm-6">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+</form>
