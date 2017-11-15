@@ -1,30 +1,51 @@
-<form name="registerform" ng-submit="updateProfile()">
+<form name="profileform" ng-submit="updateProfile()">
   <div class="title-section">
-    <h1><span>Profile</span></h1>
+    <h1><span>Update Profile</span></h1>
   </div>
-  
+
   <div class="row">
     <div class="form-group col-sm-6">
       <label for="exampleInputEmail1">Email address</label>
-      <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" ng-model="data.email" ng-pattern="/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/" ng-required="true"/>      
+      <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" ng-required="true" ng-disabled="true" ng-model="data.email"/>      
+    </div>
+    <div class="form-group col-sm-6" ng-hide="controls.editEmail">
+      <button class="btn btn-default" ng-click="controls.editEmail = true"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Email</button>
     </div>
   </div>
-  <div class="row">
+  <div class="row" ng-show="controls.editEmail">
     <div class="form-group col-sm-6">
-      <label for="exampleInputPassword1">Old Password</label>
-      <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-model="data.password" ng-minlength="6" maxlength="25" ng-required="true"/>
+      <label for="newEmail">New Email address</label>
+      <input type="email" name="newemail" class="form-control" id="newEmail" aria-describedby="emailHelp" placeholder="Enter email" ng-model="data.newEmail" ng-pattern="/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/" ng-required="controls.editEmail"/>      
+    </div>
+  </div>
+  <div class="row" ng-hide="controls.editEmail || controls.editPassword">
+    <div class="form-group col-sm-6">
+      <label for="exampleInputPassword1">Password</label>
+      <input type="password" value="123456" class="form-control" ng-disabled="true" />
+    </div>
+    <div class="form-group col-sm-6">
+      <button class="btn btn-default" ng-click="controls.editPassword = true"><i class="fa fa-pencil" aria-hidden="true" ></i> Edit Password</button>
     </div>
   </div>  
-  <div class="row">
+  <div class="row" ng-show="controls.editEmail || controls.editPassword">
+    <div class="form-group col-sm-6">
+      <label for="exampleInputPassword1"><span ng-show="controls.editPassword">Current </span>Password</label>
+      <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-minlength="6" ng-model="data.password" maxlength="25" ng-required="controls.editEmail || controls.editPassword"/>
+    </div>
+    <div class="form-group col-sm-6">
+      <button class="btn btn-default" ng-click="controls.editPassword = true"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Password</button>
+    </div>
+  </div>  
+  <div class="row" ng-show="controls.editPassword">
     <div class="form-group col-sm-6">
       <label for="InputPassword1">New Password</label>
-      <input type="password" name="newPassword" class="form-control" id="InputPassword1" placeholder="Password" ng-model="data.password" ng-minlength="6" maxlength="25" ng-required="true"/>
+      <input type="password" name="newPassword" class="form-control" id="InputPassword1" placeholder="Password" ng-model="data.newpassword" ng-minlength="6" maxlength="25" ng-required="controls.editPassword"/>
     </div>
   </div>  
-  <div class="row">
+  <div class="row" ng-show="controls.editPassword">
     <div class="form-group col-sm-6">
       <label for="InputPassword2">Confirm New Password</label>
-      <input type="password" name="confirmNewPassword" class="form-control" id="InputPassword2" placeholder="Confirm Password" ng-model="data.Confirm" ng-minlength="6" maxlength="25" ng-required="true"/>
+      <input type="password" name="confirmNewPassword" class="form-control" id="InputPassword2" placeholder="Confirm Password" ng-model="data.confirm" ng-minlength="6" maxlength="25" ng-required="controls.editPassword"/>
     </div>
   </div>  
   <div class="row">

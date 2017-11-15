@@ -54,15 +54,13 @@ router.post('/profile.do', function(req, res) {
 
 router.post('/products.do', function(req, res) {  
   Products.getTopProducts(function(err, productList){
-    console.log(productList);
-    res.json({ status: 'OK' });
+    res.json({ status: 'OK', products: productList});
   })
-  
 });
 
-router.post('/likeProduct.do', function(req, res) {  
+router.post('/likeproduct.do', function(req, res) {  
   console.log(req.session);
-
+  if()
   res.json({ status: 'OK' });
   
 });

@@ -45,8 +45,10 @@ Object.keys(db).forEach(function(modelName) {
 });
 
 
-db.users.belongsToMany(db.products, {through: db.product_likes, foreignKey: 'user_id'});
+db.users.belongsToMany(db.products, {through: db.product_likes, foreignKey: 'user_id'})
 db.products.belongsToMany(db.users, {through: db.product_likes, foreignKey: 'product_id'})
+db.users.hasMany(db.product_likes, { foreignKey: 'user_id' })
+db.products.hasMany(db.product_likes, { foreignKey: 'product_id' })
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

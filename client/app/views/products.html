@@ -1,1 +1,11 @@
 <h1>Product List</h1>
+<ul class="list-group">
+  <li class="list-group-item" ng-repeat="product in data.products">
+    <h2 class="list-title">
+      {{product.name}}
+      <span class="badge">{{product.productLikes}}</span>
+      <a ng-show="!product.liked" class="like-btn" ng-click="likeProduct(product)"><i class="fa fa-thumbs-up" aria-hidden="true"></i></a>
+    </h2>
+    <p>{{product.description}}</p>
+  </li>
+</ul>

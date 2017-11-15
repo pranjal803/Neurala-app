@@ -76,6 +76,7 @@ angular
         login = status;
       },
       isLoggedIn: function() {
+        //return true;
         return login;
       }
     };
