@@ -453,6 +453,22 @@ module.exports = function (grunt) {
       ]
     },
 
+    processhtml: {
+      options: {
+        commentMarker: 'process'
+      },
+      dist: {
+        files: [
+          {
+            expand: true,
+            cwd: '<%= yeoman.dist %>',
+            src: ['*.html', 'views/{,*/}*.html'],
+            dest: '<%= yeoman.dist %>'
+          }
+        ]
+      }
+    },
+
     // Test settings
     karma: {
       unit: {
@@ -506,6 +522,7 @@ module.exports = function (grunt) {
     'cssmin',
     'uglify',
     'filerev',
+    'processhtml',
     'usemin',
     'htmlmin'
   ]);

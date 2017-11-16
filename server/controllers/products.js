@@ -12,11 +12,7 @@ exports.getTopProducts = function(done){
     include: [{
         model: ProductLikes, attributes: []
     }],
-    group: ['product_id']
-    // include: [{
-    //   model: ProductLikes,
-    //   attributes: ['product_id', [sequelize.fn('COUNT', 'product_id'), 'productLikes']],
-    // }]
+    group: ['product_id']    
   })
   .then((productList)=>{
     //console.log(productList);

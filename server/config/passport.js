@@ -1,5 +1,5 @@
-const bCrypt = require("bcryptjs");
-const validator = require("validator");
+const bCrypt = require("bcryptjs")
+const validator = require("validator")
 
 module.exports = function(passport, user) {
 
@@ -35,7 +35,7 @@ module.exports = function(passport, user) {
         return bCrypt.hashSync(password, 8);
       };
 
-      if(!validator.isEmail(email)){
+      if(!validator.isEmail(email) || !validator.isLength(password, {min: 6, max: 25})){
         return done(null, false);
       }
       
@@ -80,8 +80,7 @@ module.exports = function(passport, user) {
     },
 
 
-    function(req, email, password, done) {
-
+    function(req, email, password, done) {      
       var User = user;
       var isValidPassword = function(userpass, password) {
         return bCrypt.compareSync(password, userpass);

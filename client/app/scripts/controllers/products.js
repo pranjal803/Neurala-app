@@ -10,23 +10,7 @@
 angular.module('clientApp')
   .controller('ProductsCtrl', ['$scope', 'utils', '$location', function($scope, utils, $location) {
 
-    $scope.data = {};
-    // $scope.data.products = [
-    //   {
-    //     "id": 1,
-    //     "name": "Product1",
-    //     "description": "This is product 1 description",
-    //     "productLikes": 5,
-    //     "liked": true
-    //   },
-    //   {
-    //     "id": 2,
-    //     "name": "Product2",
-    //     "description": "This is product 2 description",
-    //     "productLikes": 10,
-    //     "liked": false
-    //   }
-    // ];
+    $scope.data = {};    
     var productsPromise = utils.definePostService('products')();
     utils.handlePromise(productsPromise, function(response) {
       console.log(response);

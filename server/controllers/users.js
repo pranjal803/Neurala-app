@@ -20,3 +20,17 @@ exports.getUser = function(userId, done){
     done(err);
   })
 }
+
+exports.getUserByEmail = function(email, done){
+  Users.findOne({
+    where:{
+      email: email
+    }
+  })
+  .then((user)=>{
+    done(null, user)
+  }) 
+  .catch((err)=>{
+    done(err);
+  }) 
+}

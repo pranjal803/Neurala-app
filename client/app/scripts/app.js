@@ -8,6 +8,15 @@
  *
  * Main module of the application.
  */
+//check for mock services
+ (function () {
+  if (!angular.mock) {
+    angular.element(document).ready(function () {
+      angular.bootstrap(document, ['clientApp']);
+    });
+  }
+})();
+
 angular
   .module('clientApp', [
     'ngRoute'
@@ -75,8 +84,7 @@ angular
       setLogin: function(status) {
         login = status;
       },
-      isLoggedIn: function() {
-        //return true;
+      isLoggedIn: function() {        
         return login;
       }
     };
@@ -106,9 +114,7 @@ angular
       }      
     });
 
-    $rootScope.$on('$routeChangeStart', function(event, next, current){
-        
-        //check if the user is logged in
+    $rootScope.$on('$routeChangeStart', function(event, next, current){        
         var logged = Auth.isLoggedIn();
         $anchorScroll();
         if(next.$$route.data){          

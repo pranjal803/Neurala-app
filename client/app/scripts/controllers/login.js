@@ -12,8 +12,7 @@ angular.module('clientApp')
     
     $scope.controls = {"loginError": false, "message": ""};
 
-    $scope.doLogin = function(){
-      console.log($scope);
+    $scope.doLogin = function(){      
       $scope.controls.loginError = false;
       if ($scope.loginform.$invalid) {
         angular.forEach($scope.loginform.$error, function(field) {
@@ -30,8 +29,7 @@ angular.module('clientApp')
       };
 
       var loginPromise = utils.definePostService('login')(data);
-      utils.handlePromise(loginPromise, function(response) {
-        console.log(response);
+      utils.handlePromise(loginPromise, function(response) {        
         if (response.status == 'LOGIN_SUCCESS') {
           Auth.setLogin(true);      
           $location.path("/");

@@ -1,13 +1,15 @@
-const express = require('express');
-const router = express.Router();
-const passport = require('passport');
-const path = require('path');
+const express = require('express')
+const router = express.Router()
+const passport = require('passport')
+const path = require('path')
 const Products = require('../controllers/products')
 const Users = require('../controllers/users')
 const _ = require('underscore')
 const async = require('async')
+const bCrypt = require('bcryptjs')
+const validator = require("validator")
 
-router.post('/register.do', function(req, res, next) {
+router.post('/register.do', function(req, res) {
   passport.authenticate('local-signup', function(err, user) {
     if (err) { res.json({ status: "ERROR" }) }
     if (!user) {
@@ -18,10 +20,10 @@ router.post('/register.do', function(req, res, next) {
         res.json({ status: "SIGNUP_SUCCESS" });
       });
     }
-  })(req, res, next);
+  })(req, res);
 });
 
-router.post('/login.do', function(req, res, next) {
+router.post('/login.do', function(req, res) {
   passport.authenticate('local-signin', function(err, user, info) {
     if (err) { res.json({ status: "ERROR" }) }
     if (!user) {
@@ -32,7 +34,7 @@ router.post('/login.do', function(req, res, next) {
         res.json({ status: "LOGIN_SUCCESS" })
       });
     }
-  })(req, res, next);
+  })(req, res);
 });
 
 router.post('/logout.do', function(req, res) {
@@ -59,16 +61,71 @@ router.post('/profile.do', function(req, res) {
 });
 
 router.post('/updateprofile.do', function(req, res) {
-  if (!_.isUndefined(req.session)) {
-    Users.getUser(req.session.passport.user, (err, user) => {
-      if (err) {
-        res.json({ status: 'ERROR' });
+  if((!_.isUndefined(req.body.newemail) && !validator.isEmail(req.body.newemail)) || 
+      !_.isUndefined(req.body.newpassword) && !validator.isLength(req.body.newpassword, {min: 6, max: 25}) || 
+      req.body.newemail == req.body.email ||
+      _.isUndefined(req.body.newemail) && _.isUndefined(req.body.newpassword)) {
+    res.json({ status: "RESET_INVALID", message: "Invalid Credentials" })
+  }else{
+
+    async.waterfall([
+        function(callback){
+          passport.authenticate('local-signin', function(err, user, info) {
+            if (err) { res.json({ status: "ERROR" }) }
+            else{
+              if (!user) {
+                res.json({ status: "RESET_INVALID", message: "Invalid Credentials" })
+              } else{
+                callback(null, user)            
+              }
+            }
+          })(req, res);
+        },
+        function(passportUser, callback){          
+          if(!_.isUndefined(req.body.newemail)){
+
+            Users.getUserByEmail(req.body.newemail, function(err, user){
+              if (err) { res.json({ status: "ERROR" }) 
+              } else if(user){
+                res.json({ status: "RESET_INVALID", message: "Email already registered" })
+              }else{
+                callback(null, passportUser);
+              }
+            })
+          }else{
+            callback(null, passportUser);
+          }
+        },
+        function(passportUser, callback){
+          Users.getUser(passportUser.id, function(err, user){
+            //console.log(user);
+            var updateObj = {};
+            if(!_.isUndefined(req.body.newpassword)){
+              var newpassword = bCrypt.hashSync(req.body.newpassword, 8);
+              
+              updateObj.password = newpassword;                
+            }
+
+            if(!_.isUndefined(req.body.newemail)){
+              updateObj.email = req.body.newemail;
+            }
+            user.updateAttributes(updateObj);
+            callback(null, 'done');
+          })
+        }
+      ], 
+      function(err, result){
+        if(err){
+          res.json({ status: "ERROR" })
+        }else{
+          res.json({ status: "RESET_SUCCESS" })
+        }
       }
-      res.json({ status: 'OK', email: user.email });
-    })
-  } else {
-    res.json({ status: 'ERROR' });
+    )
+  
   }
+  
+  
 });
 router.post('/products.do', function(req, res) {
   if (!_.isUndefined(req.session) && !_.isUndefined(req.session.passport)) {    
@@ -125,8 +182,7 @@ router.post('/likeproduct.do', function(req, res) {
   }
 });
 
-router.post('/checksession.do', function(req, res) {
-  console.log(req.session);
+router.post('/checksession.do', function(req, res) {  
   if (!_.isUndefined(req.session) && !_.isUndefined(req.session.passport)) {
     res.json({ status: 'OK', session: true });
   } else {
