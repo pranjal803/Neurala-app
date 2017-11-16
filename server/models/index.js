@@ -23,7 +23,7 @@ var config = {
     min: 0,
     idle: 10000
   },
-  //logging: false,
+  logging: false,
   operatorsAliases: false
 }
 var sequelize = new Sequelize(config.database, config.username, config.password, config);

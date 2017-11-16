@@ -20,5 +20,5 @@
       <button type="submit" class="btn btn-primary">Submit</button>
     </div>
   </div>
-  <p ng-if="controls.loginError" ng-bind-html="controls.message"></p>
+  <p ng-if="controls.loginError">{{controls.message}}</p>
 </form>

@@ -96,6 +96,16 @@ angular
       });
     };
 
+    var sessionPromise = utils.definePostService('checksession')();
+    utils.handlePromise(sessionPromise, function(response) { 
+      if(response.session){        
+        $location.path('/');
+        Auth.setLogin(true);
+      }else{
+        Auth.setLogin(false);
+      }      
+    });
+
     $rootScope.$on('$routeChangeStart', function(event, next, current){
         
         //check if the user is logged in
