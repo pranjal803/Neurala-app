@@ -30,13 +30,14 @@
   <div class="row" ng-show="controls.editEmail || controls.editPassword">
     <div class="form-group col-sm-6">
       <label for="exampleInputPassword1">Confirm Password</label>
-      <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-minlength="6" ng-model="data.password" maxlength="25" ng-required="controls.editEmail || controls.editPassword"/>
+      <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-minlength="6" ng-model="data.password" maxlength="25" ng-required="controls.editEmail || controls.editPassword"/>      
     </div>    
   </div>  
   <div class="row" ng-show="controls.editPassword">
     <div class="form-group col-sm-6">
       <label for="InputPassword1">New Password</label>
       <input type="password" name="newPassword" class="form-control" id="InputPassword1" placeholder="Password" ng-model="data.newpassword" ng-minlength="6" maxlength="25" ng-required="controls.editPassword"/>
+      <small id="passwordHelp" class="form-text text-muted">Password should be 6-25 characters long</small>
     </div>
   </div>  
   <div class="row" ng-show="controls.editPassword">
